@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <title>Code Quiz</title>
+  </head>
+<style>
+    /*Style Buttons, align text and set displays*/
+    .OptionsBtns {
+        display: none;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #returner, #form1, #leaderboard, #reseter {
+        display: none;
+    }
+
+    p, button, form, ol {
+        font-family: "Quicksand";
+    }
+
+    p, ol {
+        text-align: center;
+    }
+
+    #intro, #counter, #submitBtn {
+        margin-top: 2em;
+    }
+
+    #returner, #reseter {
+        margin-right: 1em;
+        margin-left: 1em;
+    }
+
+    ol {
+        padding-left: 0;
+    }
+</style>
+<body>
+    <!--Use Bootstrap to set up rows and columns with texts and buttons-->
+    <div class="container">
+      <div class="row justify-content-end">
+          <div class="col-md-8 col">
+         <p id="QuestionNum"></p>
+      <p id="intro">Welcome! This exam on HTML, CSS and Javascript fundamentals consists of 10 questions. You will have one minute to complete the exam. An incorrect answer will deduct 5 seconds from your time. Your score at the end equals the time remaining. Good luck!</p>
+    </div>
+      <div class="col-md-2">
+        <p id="counter"></p>
+      </div>
+      </div>
+      <div class="row justify-content-center">
+      <button id="startBtn" class="btn btn-info" type="button">Start exam</button>
+    </div>
+      <p id="showScore"></p>
+      <div class="row justify-content-center">
+      <form id="form1">
+          <label for="fullName">Full Name:</label><br>
+          <input type="text" id="fullName" name="fullName"><br>
+          <div class="row justify-content-center">
+          <button type="submit" class="btn btn-success" id="submitBtn">Submit</button>
+        </div>
+      </form>
+    </div>
+      <button class = "btn btn-dark OptionsBtns" id="option1"></button>
+      <button class = "btn btn-dark OptionsBtns" id="option2"></button>
+      <button class = "btn btn-dark OptionsBtns" id="option3"></button>
+      <button class = "btn btn-dark OptionsBtns" id="option4"></button>
+      <div class="row justify-content-center">
+      <ol id="leaderboard"></ol>
+      </div>
+      <p id="result"></p>
+      <div class="row justify-content-center">
+      <button id="returner" class="btn btn-light" onclick="window.location.reload()">Return to HomeScreen</button>
+      <button id="reseter" class="btn btn-danger" onclick="reset()">Reset Leaderboard</button>
+    </div>
+    </div>
+      <div class="row justify-content-center">
+      <button id="viewLeaders" class="btn btn-success" onclick="seeLeaders()">View Leaderboard</button>
+    </div>
+    </div>
+<script>
+
+//set buttons equal to variables
+var choiceOne = document.getElementById("option1");
+var choiceTwo = document.getElementById("option2");
+var choiceThree = document.getElementById("option3");
+var choiceFour = document.getElementById("option4");
+var startExam = document.getElementById("startBtn");
+
+//add event listeners to buttons
+startExam.addEventListener("click",countdown);
+startExam.addEventListener("click",showBtns);
+startExam.addEventListener("click",displayQuestion);
+startExam.addEventListener("click",questionNumber);
+choiceOne.addEventListener("click", increment);
+choiceOne.addEventListener("click",questionNumber);
+choiceTwo.addEventListener("click", increment);
+choiceTwo.addEventListener("click",questionNumber);
+choiceThree.addEventListener("click", increment);
+choiceThree.addEventListener("click",questionNumber);
+choiceFour.addEventListener("click", increment);
+choiceFour.addEventListener("click",questionNumber);
+
+//timer
+var secondsLeft=undefined;
+var decreaseSecs;
+
+function countdown(){
+    secondsLeft = 60;
+    setTimeout(timer,0);
+    decreaseSecs = setInterval(timer,1000);
+}
+
+function timer() {
+    document.getElementById("counter").innerText = secondsLeft;
+    if (secondsLeft <= 0) {
+        stop();
+        inputName();
+        }
+    else {
+    secondsLeft--;
+    }
+}
+
+function stop () {
+    clearInterval(decreaseSecs);
+    document.getElementById("counter").innerText = "";
+}
+
+//show multiple choice options on exam start
+function showBtns() {
+    choiceOne.style.display = "block";
+    choiceTwo.style.display = "block";
+    choiceThree.style.display = "block";
+    choiceFour.style.display = "block";
+    startExam.style.display = "none";
+}
+
+//increment i (used to go through array)
+var i = 0;
+function increment() {
+    i++;
+}
+
+//increment question number
+var questNum = 0;
+function questionNumber() {
+    questNum++;
+    document.getElementById("QuestionNum").innerText = "Question Number: " + questNum;
+}
+
+function displayQuestion() {
+    document.getElementById("viewLeaders").style.display = "none";
+    //Questions and answer choices in arrays
+    var questions = ["CSS stands for...","Which of the following is not a JavaScript Primitive type?","JavaScript can be used to do all of the following EXCEPT...", "A variable inside the scope of a function is...","The style attribute is used to...", "Which of the following is not a DOM method?", "Appending a child node means to...", "Bootstrap is...", "To invoke a function means to...", "Items in JavaScript arrays are separated by..."];
+    var correctAnswers = ["Cascading Style Sheets","Double","Choose the background color of an element", "Accessible only to that function", "Assign CSS properties to an element", "getElementByLocation", "Add an element to a parent node", "A CSS library", "Run the code inside the function", "Commas"];
+    var wrongAnswers1= ["Coding Syntax Sentences","Boolean","Trigger on click events", "Globally accessible", "Change the HTML tag of an element", "getElementById", "Create a new element", "A DOM navigation method", "Add new code to the function", "Periods"];
+    var wrongAnswers2= ["Computer Systems Sorting","String","Assign variables and functions", "Universally undefined", "Add an event trigger to an element", "getElementsByClassName", "Remove a child element from the DOM", "An HTML attribute", "Stop the function from running", "Spaces"];
+    var wrongAnswers3= ["Commercial Simplifying Software","Number","Create if-else statements", "Variables cannot be inside scopes", "Delete the element", "getElementByTagName", "Transfer a child node to a new parent", "A type of JavaScript function", "Assign the function to a button", "Semicolons"];
+    //Used to randomize answer positioning
+    var randomizeOrder = Math.floor(Math.random()*4);
+    document.getElementById("intro").innerText = questions[i];
+    //stop past question 10
+    if (i == 10) {
+        stop();
+        inputName();
+    }
+    if (randomizeOrder == 0) {
+        choiceOne.innerText = correctAnswers[i];
+        choiceOne.addEventListener("click", showCorrect);
+        choiceTwo.innerText = wrongAnswers1[i];
+        choiceTwo.addEventListener("click", showWrong);
+        choiceThree.innerText = wrongAnswers2[i];
+        choiceThree.addEventListener("click", showWrong);
+        choiceFour.innerText = wrongAnswers3[i];
+        choiceFour.addEventListener("click", showWrong);
+    }
+    if (randomizeOrder == 1) {
+        choiceOne.innerText = wrongAnswers1[i];
+        choiceOne.addEventListener("click", showWrong);
+        choiceTwo.innerText = correctAnswers[i];
+        choiceTwo.addEventListener("click", showCorrect);
+        choiceThree.innerText = wrongAnswers2[i];
+        choiceThree.addEventListener("click", showWrong);
+        choiceFour.innerText = wrongAnswers3[i];
+        choiceFour.addEventListener("click", showWrong);
+    }
+    if (randomizeOrder == 2) {
+        choiceOne.innerText = wrongAnswers1[i];
+        choiceOne.addEventListener("click", showWrong);
+        choiceTwo.innerText = wrongAnswers2[i];
+        choiceTwo.addEventListener("click", showWrong);
+        choiceThree.innerText = correctAnswers[i];
+        choiceThree.addEventListener("click", showCorrect);
+        choiceFour.innerText = wrongAnswers3[i];
+        choiceFour.addEventListener("click", showWrong);
+    }
+    if (randomizeOrder == 3) {
+        choiceOne.innerText = wrongAnswers1[i];
+        choiceOne.addEventListener("click", showWrong);
+        choiceTwo.innerText = wrongAnswers2[i];
+        choiceTwo.addEventListener("click", showWrong);
+        choiceThree.innerText = wrongAnswers3[i];
+        choiceThree.addEventListener("click", showWrong);
+        choiceFour.innerText = correctAnswers[i];
+        choiceFour.addEventListener("click", showCorrect);
+    }
+}
+
+//To be run on correct answers (flashes correct)
+function showCorrect() {
+    setTimeout(stopDisplay,500);
+    document.getElementById("result").innerText = "Correct!";
+    remover();
+}
+
+//To be run on wrong answers (flashes wrong and deducts time)
+function showWrong() {
+    var currentTime = document.getElementById("counter").innerText;
+    secondsLeft = currentTime - 5;
+    document.getElementById("result").innerText = "Wrong!";
+    setTimeout(stopDisplay,500);
+    if (secondsLeft <= 0) {
+        stop();
+        inputName();
+    }
+    else {
+    document.getElementById("counter").innerText = secondsLeft;
+    remover();
+    }
+}
+
+//Enables flashing
+function stopDisplay() {
+    document.getElementById("result").innerText = " ";
+}
+
+//removes event listeners to prevent layering listeners
+function remover () {
+    choiceOne.removeEventListener("click",showCorrect);
+    choiceOne.removeEventListener("click",showWrong);
+    choiceTwo.removeEventListener("click",showCorrect);
+    choiceTwo.removeEventListener("click",showWrong);
+    choiceThree.removeEventListener("click",showCorrect);
+    choiceThree.removeEventListener("click",showWrong);
+    choiceFour.removeEventListener("click",showCorrect);
+    choiceFour.removeEventListener("click",showWrong);
+    displayQuestion();
+}
+
+//sets up the form to be displayed on screen
+function inputName() {
+    choiceOne.style.display = "none";
+    choiceTwo.style.display = "none";
+    choiceThree.style.display = "none";
+    choiceFour.style.display = "none";
+    document.getElementById("intro").innerText = "Please enter your full name to log your score onto the leaderboard."
+    document.getElementById("QuestionNum").innerText = " ";
+    document.getElementsByTagName("FORM")[0].style.display = "block";
+    getScore();
+}
+
+//calculates your score, prevents undefined or negative scores
+score = 0;
+function getScore() {
+    if (secondsLeft >= 0) {
+    document.getElementById("showScore").innerText = "Your Score: " + secondsLeft;
+    score = secondsLeft;
+    }
+    else {
+        document.getElementById("showScore").innerText = "Your Score: " + 0;
+    }
+}
+
+//variables for leaderboard
+var listEntry=document.querySelector("#fullName");
+var list=document.querySelector("#leaderboard");
+var addToList = document.querySelector("#form1");
+var scoreArray = [];
+
+//add values to leaderboard by mapping an array
+addToList.addEventListener('submit', function storage(event) {
+    event.preventDefault();
+    if (listEntry.value.length < 1) {
+        return;
+    }
+    scoreArray.push(listEntry.value + " " + score);
+    //Could not get the leaderboard to display names AND scores in decreasing order... works with only scores as is
+    scoreArray.sort(function (a,b){return b-a});
+    localStorage.setItem('scoreArray',JSON.stringify(scoreArray));
+    list.innerHTML = '<ol>' + scoreArray.map(function(scoreArray) {
+        return '<li>' + scoreArray + '</li>';
+    }).join('') + '</ol>';
+    localStorage.setItem('list', list.innerHTML);
+    addToList.style.display = "none";
+    document.getElementById("leaderboard").style.display = "block";
+    document.getElementById("returner").style.display = "block";
+    document.getElementById("intro").innerText = "Current Leaderboard";
+    document.getElementById("reseter").style.display = "block";
+    document.getElementById("showScore").innerText = '';
+},false);
+
+//save leaderboard
+var saved = localStorage.getItem("list");
+if (saved) {
+    list.innerHTML = saved;
+}
+
+//save array
+var getArray = localStorage.getItem('scoreArray');
+var savedArray = JSON.parse(getArray);
+if (savedArray) {
+     scoreArray = savedArray;
+}
+
+//reset leaderboard function
+function reset() {
+    scoreArray = [];
+    localStorage.setItem('scoreArray', scoreArray);
+    list.innerHTML = "";
+    localStorage.setItem('list',list.innerHTML);
+    namesArray = [];
+    localStorage.setItem('namesArray',namesArray);
+    namesCounter = 0;
+    localStorage.setItem('namesCounter', namesCounter);
+};
+
+//See leaderboard function
+function seeLeaders() {
+    document.getElementById("startBtn").style.display = "none";
+    document.getElementById("viewLeaders").style.display = "none";
+    document.getElementById("intro").innerText = "Current Leaderboard";
+    document.getElementById("QuestionNum").style.display = "none";
+    document.getElementById("reseter").style.display = "block";
+    document.getElementById("returner").style.display = "block";
+    document.getElementById("leaderboard").style.display = "block";
+};
+</script>
+
+</body>
+</html>
