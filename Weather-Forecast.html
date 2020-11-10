@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Weather Dashboard</title>
+  </head>
+  <style>
+.col-4 {
+    background-color: lightgrey;
+}
+
+form.citySearch input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid black;
+  float: left;
+  width: 80%;
+  background: white;
+}
+
+form.citySearch button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid black;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+#seePrevious {
+  margin-top: 30px;
+}
+
+.previousEntry {
+  text-align: center;
+}
+
+#changeColor {
+  padding: 5px;
+  border-radius: 25%;
+  width: fit-content;
+  margin-bottom: 20px;
+}
+
+#uv {
+  margin-right: 10px;
+}
+
+.card-row {
+  margin-left: 10px;
+  padding: 10px;
+}
+
+img {
+  height: 50px;
+  width: 50px;
+}
+
+.forecast {
+  background-color: lightskyblue;
+  font-size: 7pt;
+}
+
+#plusOne,#plusTwo,#plusThree,#plusFour,#plusFive {
+  font-size: 8pt;
+}
+
+
+</style>
+  <body>
+      <div class="container">
+          <div class="row justify-content-center">
+              <h1>Weather Dashboard</h1>
+          </div>
+          <div class="row">
+              <div class="col-4">
+                  <h4>Search for a City: </h4>
+                  <br>
+                    <form class="citySearch" action="/action_page.php">
+                        <input id="cityName" type="text" name="citySearch">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                    <br>
+                    <div class="card" style="width: 100%" id="seePrevious">
+                      <ul class="list-group list-group-flush" id="listOfPrevious">
+                      </ul>
+                  </div>
+                </div>
+              <div class="col-8">
+                <div class="card" style="width: 100%">
+                    <div class="card-body">
+                      <h5 class="card-title" id="currentCity"></h5>
+                      <div class="row card-row">
+                      <p class="card-text" id="temp"></p>
+                    </div>
+                      <div class="row card-row">
+                      <p class="card-text" id="humidity"></p>
+                    </div>
+                      <div class="row card-row">
+                      <p class="card-text" id="windSpeed"></p>
+                    </div>
+                      <div class="row card-row">
+                      <p class="card-text" id="uv"><p id="changeColor"></p></p>
+                    </div>
+                    </div>
+                </div>
+                    <div class="row justify-content-around">
+                    <h4>5 Day Forecast</h4>
+                    </div>
+                    <div class="row justify-content-around">
+                        <div class="col-2">
+                          <div class="card">
+                            <div class="card-body forecast">
+                                <h5 class="card-title" id="plusOne"></h5>
+                                <p class="card-text" id="icon1"></p>
+                                <p class="card-text" id="temp1"></p>
+                                <p class="card-text" id="humidity1"></p>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                          <div class="card">
+                            <div class="card-body forecast">
+                                <h5 class="card-title" id="plusTwo"></h5>
+                                <p class="card-text" id="icon2"></p>
+                                <p class="card-text" id="temp2"></p>
+                                <p class="card-text" id="humidity2"></p>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-2">
+                          <div class="card">
+                            <div class="card-body forecast">
+                                <h5 class="card-title" id="plusThree"></h5>
+                                <p class="card-text" id="icon3"></p>
+                                <p class="card-text" id="temp3"></p>
+                                <p class="card-text" id="humidity3"></p>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                          <div class="card">
+                            <div class="card-body forecast">
+                                <h5 class="card-title" id="plusFour"></h5>
+                                <p class="card-text" id="icon4"></p>
+                                <p class="card-text" id="temp4"></p>
+                                <p class="card-text" id="humidity4"></p>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                          <div class="card">
+                            <div class="card-body forecast">
+                                <h5 class="card-title" id="plusFive"></h5>
+                                <p class="card-text" id="icon5"></p>
+                                <p class="card-text" id="temp5"></p>
+                                <p class="card-text" id="humidity5"></p>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+        </div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script>
+
+      var listOfCities = [];
+
+    //On load, pull up the weather for the most recent search
+        $(document).ready(function() {
+          getArray = JSON.parse(localStorage.getItem('listOfCities'));
+          city = getArray[getArray.length - 1];
+            $.ajax('https://api.openweathermap.org/data/2.5/weather?q='+city+'&appid=9eb7eccfc166353305314314e2192f1b').done(function (data) {
+              var lon=(data['coord']['lon']);
+              var lat=(data['coord']['lat']);
+              $.ajax('https://api.openweathermap.org/data/2.5/onecall?lat='+lat+'&lon='+lon+'&units=imperial&appid=9eb7eccfc166353305314314e2192f1b').done(function (data) {
+                $('#currentCity').text(city + " " + moment().format('MM' + '/' + 'DD' +'/' + 'YYYY'))
+                var icon = data['current']['weather'][0]['icon'];
+                var source = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
+                var weatherDisplay = $(document.createElement('img'));
+                $(weatherDisplay).attr("src",source);
+                $('#currentCity').append(weatherDisplay);
+                $('#temp').text("Temperature: " + data['current']['temp'] + "\u2109");
+                $('#humidity').text("Humidity: " + data['current']['humidity'] + "%");
+                $('#windSpeed').text("Wind Speed: " + data['current']['wind_speed'] + " MPH");
+                $('#uv').text("UV Index: ");
+                $('#changeColor').text(data['current']['uvi']);
+                if ($('#changeColor').text() <= 2) {
+                  $('#changeColor').css('backgroundColor', 'green')
+                }
+                if ($('#changeColor').text() >= 3 && $('#changeColor').text() <= 5) {
+                  $('#changeColor').css('backgroundColor', 'yellow')
+                }
+                if ($('#changeColor').text() >=6 && $('#changeColor').text() <= 7) {
+                  $('#changeColor').css('backgroundColor', 'orange')
+                }
+                if ($('#changeColor').text() >= 8) {
+                  $('#changeColor').css('backgroundColor', 'red')
+                }
+                $('#plusOne').text(moment().add(1,'days').format('MM' + '/' + 'DD' +'/' + 'YYYY'));
+                $('#plusTwo').text(moment().add(2,'days').format('MM' + '/' + 'DD' +'/' + 'YYYY'));
+                $('#plusThree').text(moment().add(3,'days').format('MM' + '/' + 'DD' +'/' + 'YYYY'));
+                $('#plusFour').text(moment().add(4,'days').format('MM' + '/' + 'DD' +'/' + 'YYYY'));
+                $('#plusFive').text(moment().add(5,'days').format('MM' + '/' + 'DD' +'/' + 'YYYY'));
+                var icon1 = data['daily'][1]['weather'][0]['icon'];
+                var source1 = "http://openweathermap.org/img/wn/"+icon1+"@2x.png";
+                var weatherDisplay1 = $(document.createElement('img'));
+                $(weatherDisplay1).attr("src",source1);
+                $('#icon1').append(weatherDisplay1);
+                var icon2 = data['daily'][2]['weather'][0]['icon'];
+                var source2 = "http://openweathermap.org/img/wn/"+icon2+"@2x.png";
+                var weatherDisplay2 = $(document.createElement('img'));
+                $(weatherDisplay2).attr("src",source2);
+                $('#icon2').append(weatherDisplay2);
+                var icon3 = data['daily'][3]['weather'][0]['icon'];
+                var source3 = "http://openweathermap.org/img/wn/"+icon3+"@2x.png";
+                var weatherDisplay3 = $(document.createElement('img'));
+                $(weatherDisplay3).attr("src",source3);
+                $('#icon3').append(weatherDisplay3);
+                var icon4 = data['daily'][4]['weather'][0]['icon'];
+                var source4 = "http://openweathermap.org/img/wn/"+icon4+"@2x.png";
+                var weatherDisplay4 = $(document.createElement('img'));
+                $(weatherDisplay4).attr("src",source4);
+                $('#icon4').append(weatherDisplay4);
+                var icon5 = data['daily'][5]['weather'][0]['icon'];
+                var source5 = "http://openweathermap.org/img/wn/"+icon5+"@2x.png";
+                var weatherDisplay5 = $(document.createElement('img'));
+                $(weatherDisplay5).attr("src",source5);
+                $('#icon5').append(weatherDisplay5);
+                $('#temp1').text("Temperature: " + data['daily'][1]['temp']['day'] + "\u2109");
+                $('#humidity1').text("Humidity: " + data['daily'][1]['humidity'] + "%");
+                $('#temp2').text("Temperature: " + data['daily'][2]['temp']['day'] + "\u2109");
+                $('#humidity2').text("Humidity: " + data['daily'][2]['humidity'] + "%");
+                $('#temp3').text("Temperature: " + data['daily'][3]['temp']['day'] + "\u2109");
+                $('#humidity3').text("Humidity: " + data['daily'][3]['humidity'] + "%");
+                $('#temp4').text("Temperature: " + data['daily'][4]['temp']['day'] + "\u2109");
+                $('#humidity4').text("Humidity: " + data['daily'][4]['humidity'] + "%");
+                $('#temp5').text("Temperature: " + data['daily'][5]['temp']['day'] + "\u2109");
+                $('#humidity5').text("Humidity: " + data['daily'][5]['humidity'] + "%");
+            })
+          })
+        })
+
+          $('.citySearch').submit(function (e){
+            (e).preventDefault();
+            var city=$('#cityName').val();
+            //Reject blank city names
+            if (city=="") {
+              return;
+            }
+            //Remove last entry went list reaches ten
+            if (listOfCities.length == 10) {
+              listOfCities.shift();
+              $('.list-group-item').eq(0).remove();
+            }
+            //update array
+            listOfCities.push(city);
+            localStorage.setItem('listOfCities',JSON.stringify(listOfCities));
+            //Add list item
+            var previousEntry = $(document.createElement('p'));
+            var newEntry = $(document.createElement('li'));
+            $(previousEntry).addClass('previousEntry');
+            $(newEntry).addClass('list-group-item');
+            $(previousEntry).text(city);
+            $(previousEntry).appendTo(newEntry);
+            $(newEntry).appendTo('#listOfPrevious');
+            //Pull from API to get long lat
+            $.ajax('https://api.openweathermap.org/data/2.5/weather?q='+city+'&appid=9eb7eccfc166353305314314e2192f1b').done(function (data) {
+              var lon=(data['coord']['lon']);
+              var lat=(data['coord']['lat']);
+              //Use long lat to get weather info
+              $.ajax('https://api.openweathermap.org/data/2.5/onecall?lat='+lat+'&lon='+lon+'&units=imperial&appid=9eb7eccfc166353305314314e2192f1b').done(function (data) {
+                $('#currentCity').text(city + " " + moment().format('MM' + '/' + 'DD' +'/' + 'YYYY'))
+                var icon = data['current']['weather'][0]['icon'];
+                var source = "http://openweathermap.org/img/wn/"+icon+"@2x.png";
+                var weatherDisplay = $(document.createElement('img'));
+                $(weatherDisplay).attr("src",source);
+                $('#currentCity').append(weatherDisplay);
+                $('#temp').text("Temperature: " + data['current']['temp'] + "\u2109");
+                $('#humidity').text("Humidity: " + data['current']['humidity'] + "%");
+                $('#windSpeed').text("Wind Speed: " + data['current']['wind_speed'] + " MPH");
+                $('#uv').text("UV Index: ");
+                //Color UV index
+                $('#changeColor').text(data['current']['uvi']);
+                if ($('#changeColor').text() <= 2) {
+                  $('#changeColor').css('backgroundColor', 'green')
+                }
+                if ($('#changeColor').text() >= 3 && $('#changeColor').text() <= 5) {
+                  $('#changeColor').css('backgroundColor', 'yellow')
+                }
+                if ($('#changeColor').text() >=6 && $('#changeColor').text() <= 7) {
+                  $('#changeColor').css('backgroundColor', 'orange')
+                }
+                if ($('#changeColor').text() >= 8) {
+                  $('#changeColor').css('backgroundColor', 'red')
+                }
+                //Display dates for forecast
+                $('#plusOne').text(moment().add(1,'days').format('MM' + '/' + 'DD' +'/' + 'YYYY'));
+                $('#plusTwo').text(moment().add(2,'days').format('MM' + '/' + 'DD' +'/' + 'YYYY'));
+                $('#plusThree').text(moment().add(3,'days').format('MM' + '/' + 'DD' +'/' + 'YYYY'));
+                $('#plusFour').text(moment().add(4,'days').format('MM' + '/' + 'DD' +'/' + 'YYYY'));
+                $('#plusFive').text(moment().add(5,'days').format('MM' + '/' + 'DD' +'/' + 'YYYY'));
+                //Put icons on forecast
+                var icon1 = data['daily'][1]['weather'][0]['icon'];
+                var source1 = "http://openweathermap.org/img/wn/"+icon1+"@2x.png";
+                var weatherDisplay1 = $(document.createElement('img'));
+                $(weatherDisplay1).attr("src",source1);
+                $('#icon1').empty();
+                $('#icon1').append(weatherDisplay1);
+                var icon2 = data['daily'][2]['weather'][0]['icon'];
+                var source2 = "http://openweathermap.org/img/wn/"+icon2+"@2x.png";
+                var weatherDisplay2 = $(document.createElement('img'));
+                $(weatherDisplay2).attr("src",source2);
+                $('#icon2').empty();
+                $('#icon2').append(weatherDisplay2);
+                var icon3 = data['daily'][3]['weather'][0]['icon'];
+                var source3 = "http://openweathermap.org/img/wn/"+icon3+"@2x.png";
+                var weatherDisplay3 = $(document.createElement('img'));
+                $(weatherDisplay3).attr("src",source3);
+                $('#icon3').empty();
+                $('#icon3').append(weatherDisplay3);
+                var icon4 = data['daily'][4]['weather'][0]['icon'];
+                var source4 = "http://openweathermap.org/img/wn/"+icon4+"@2x.png";
+                var weatherDisplay4 = $(document.createElement('img'));
+                $(weatherDisplay4).attr("src",source4);
+                $('#icon4').empty();
+                $('#icon4').append(weatherDisplay4);
+                var icon5 = data['daily'][5]['weather'][0]['icon'];
+                var source5 = "http://openweathermap.org/img/wn/"+icon5+"@2x.png";
+                var weatherDisplay5 = $(document.createElement('img'));
+                $(weatherDisplay5).attr("src",source5);
+                $('#icon5').empty();
+                $('#icon5').append(weatherDisplay5);
+                //Put humidity and temp on forecast
+                $('#temp1').text("Temperature: " + data['daily'][1]['temp']['day'] + "\u2109");
+                $('#humidity1').text("Humidity: " + data['daily'][1]['humidity'] + "%");
+                $('#temp2').text("Temperature: " + data['daily'][2]['temp']['day'] + "\u2109");
+                $('#humidity2').text("Humidity: " + data['daily'][2]['humidity'] + "%");
+                $('#temp3').text("Temperature: " + data['daily'][3]['temp']['day'] + "\u2109");
+                $('#humidity3').text("Humidity: " + data['daily'][3]['humidity'] + "%");
+                $('#temp4').text("Temperature: " + data['daily'][4]['temp']['day'] + "\u2109");
+                $('#humidity4').text("Humidity: " + data['daily'][4]['humidity'] + "%");
+                $('#temp5').text("Temperature: " + data['daily'][5]['temp']['day'] + "\u2109");
+                $('#humidity5').text("Humidity: " + data['daily'][5]['humidity'] + "%");
+              })
+          })
+        })
+      </script>
+  </body>
+</html>
