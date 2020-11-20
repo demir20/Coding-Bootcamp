@@ -24,7 +24,7 @@ Built with:
 Use: To add an event, click the "Add Event" Button and complete the form. To view the event, click on the number button in the respective calendar box (changes to a darker shade on hover). To save events to the Daily Planner after typing in the text area, simply click "Back to Calendar". Clear Calendar clears ALL events. Blue is present, red is past, green is future, grey is next or previous month.
 
 Bugs:
-Switching from when switching back to current month from previous month, the application does not load correctly.
+When switching back to current month from previous month, the application does not load correctly.
 
 
 ASSIGNMENT DETAILS:
