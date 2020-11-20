@@ -15,6 +15,8 @@ Built with:
    
 Bugs: Cannot click on the search history button to load respective city's weather
 
+ASSIGNMENT:
+
 Unit 06: Server-Side APIs
 
 Overview
