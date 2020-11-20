@@ -1,3 +1,7 @@
+Password Generator can randomly create a password 8-128 characters (lowercase, uppercase, special character and number) based on user input via prompts. Built using JavaScript. Replace alerts with modal and/or form for future improvements.
+
+ASSIGNMENT:
+
 03 JavaScript: Password Generator
 
 Your Task
