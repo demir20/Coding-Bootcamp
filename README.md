@@ -1,3 +1,7 @@
+Refractored code to display content properly on web browsers. Using CSS and HTML, code was improved and polished to properly display images and text. Must link tabs in header to appropriate text and make responsive.
+
+ASSIGNMENT:
+
 01 HTML CSS Git: Code Refactor
 
 Your Task
