@@ -1,5 +1,10 @@
 Simple Rock Paper Scissors game versus a computer.
 
-Can count rounds, increment score and display game results.
+Built to practice JavaScript.
 
-Has reset functionality.
+Functionality:
+ - Count Rounds
+ - Display Winner
+ - Keep Score
+ - Reset Score
+ - Randomize computer selection
