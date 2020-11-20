@@ -12,6 +12,15 @@ Features include:
   - Full 2020 year
   - Form validation
   
+Built with:
+  -jQuery
+  -CSS
+  -Bootstrap
+  -Moment.js
+  -FreeCodeCamp Inspiration Quote API (https://forum.freecodecamp.org/t/free-api-inspirational-quotes-json-with-code-examples/311373)
+  -CSS
+  -HTML
+  
 Use: To add an event, click the "Add Event" Button and complete the form. To view the event, click on the number button in the respective calendar box (changes to a darker shade on hover). To save events to the Daily Planner after typing in the text area, simply click "Back to Calendar". Clear Calendar clears ALL events. Blue is present, red is past, green is future, grey is next or previous month.
 
 Bugs:
