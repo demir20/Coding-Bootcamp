@@ -1,3 +1,17 @@
+Timed 10 Question Quiz on HTML,CSS and JavaScript Fundamentals
+
+Features:
+  - Deducts 5 seconds for incorrect response
+  - Leaderboard that can be viewed, added to and reset
+  - Quickly flash right or wrong on response input
+  - Randomizes question order
+  
+Built with:
+   - JavaScript (local storage, set/clear interval, on click functions)
+   - Bootstrap
+   
+Future Improvements: display leaderboard based on highest score rather than most recent score
+
 04 Web APIs: Code Quiz
 
 Your Task
